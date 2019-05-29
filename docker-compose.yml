@@ -1,15 +1,10 @@
-version: "3"
-
+version: "3.1"
 services:
-   backend:
-      build: ./php
-   frontend:
-      build: ./public_html
-      depends_on:
-      - backend
-      volumes:
-      - ./production.conf:/etc/nginx/conf.d/default.conf
+  wtf:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./public_html:/usr/share/nginx/html
-      ports:
-      - 80:80
-      - 443:443
+;
