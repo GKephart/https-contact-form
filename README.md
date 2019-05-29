@@ -62,7 +62,7 @@ certonly --webroot \
 		* make sure to replace every instance of `dont-blindly-copy-past.face-palm` with your actual url
 	* add `/starter-code/default-doceker-compose` to your projects
 `/docker-compose.yml`
-	* make sure to replace every instance of `dont-blindly-copy-past.face-palm` with your actual url
+		* make sure to replace every instance of `dont-blindly-copy-past.face-palm` with your actual url
 	* run `docker-compose up -d` 
 ### Configuring Containers to Use HTTPS
 * add `/starter-code/production.conf` to your projects `/production.conf`  
