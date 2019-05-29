@@ -26,15 +26,17 @@ certonly --webroot \
  	*  binds `/data/letsencrypt` in the certbot container to the localhost's `/home/user/project/public_html` so that the ACME challenge can pass.
 *  `-v "/docker-volumes/pwp/var/log/:/var/log/letsencrypt" \`
 	* binds the `/var/log/letsencrypt" \` in the certbot container to the localhost's `/docker-volumes/pwp/var/log/` so that debugging logs from the certbot container can be preserved.
-* `certbot/certbot` is the container that is going to be used.
+* `certbot/certbot` 
+	* is the container that is going to be used.
 * `certonly --webroot \` sets the webroot to `/`
-* `--register-unsafely-without-email --agree-tos \` register unsafely for staging purposes and agree to the terms of service  
+* `--register-unsafely-without-email --agree-tos \` 
+	* register unsafely for staging purposes and agree to the terms of service  
 * `--webroot-path=/data/letsencrypt \` 
 	* sets the webroot-path to `/data/letsencrypt` inside of the certbot container 
 * `--staging \` 
 	* issues the ssl certificate for staging purposes
 * `-d dont-blindly-copy-past.face-palm` 
-	*specifies the domain/domains to verify for the ssl certificate 
+	* specifies the domain/domains to verify for the ssl certificate 
 4. If the command from step 3 is successful run `sudo rm -rf /docker-volumes/pwp`
 5. run the same command from step 3 but this time without the staging flag and add an email for reminders on when to reissue the certificate 
 ```
@@ -53,20 +55,23 @@ certonly --webroot \
 ### Setting Up Production Containers for PWP
 1. add `/starter-code/frontend.Dockerfile` to your project's `/public_html/Dockerfile`
 2. add `/starter-code/php.Dockerfile` to your project's `/php/Dockerfile`
-3. add `/starter-code/production-docker-compose.yml` to your project's `/docker-compose.yml` \
-__optional__: If you are not using SSL 
-* add `/starter-code/default.conf` to `/production.conf` 
-* add `/starter-code/default-doceker-compose` to your projects
-`/docker-compose.yml`
-* run `docker-compose up -d` 
-### Configuring Containers to Use HTTPS
+3. add `/starter-code/default-docker-compose.yml` to your project's `/docker-compose.yml` \
 
-* make sure that the paths to the SSL-certs in production.conf are correct and that  `return 301 https://uss-hopper.site$request_uri;` points to _our_ site.
-* change the action attribute in the contact form to `php/index.php`
-* make sure your index.html is an html file
-2 cd into the the project on digital ocean
-3. run `mkdir dh-param`
-4. run `sudo openssl dhparam -out dh-param/dhparam-2048.pem 2048` 
+* __optional__: If you are not using HTTPS 
+	* add `/starter-code/default.conf` to `/production.conf` 
+		* make sure to replace every instance of `dont-blindly-copy-past.face-palm` with your actual url
+	* add `/starter-code/default-doceker-compose` to your projects
+`/docker-compose.yml`
+	* make sure to replace every instance of `dont-blindly-copy-past.face-palm` with your actual url
+	* run `docker-compose up -d` 
+### Configuring Containers to Use HTTPS
+* add `/starter-code/production.conf` to your projects `/production.conf`  
+	* make sure to replace every instance of `dont-blindly-copy-past.face-palm` with your actual url
+	* add `/starter-code/production-doceker-compose.yml` to your project's `/docker-compose.yml` \
+		* make sure to replace every instance of `dont-blindly-copy-past.face-palm` with your actual url
+3. run `mkdir dh-param` in your project on the host machine.
+4. run `sudo openssl dhparam -out dh-param/dhparam-2048.pem 2048` in your project on the host machine. 
 5. run `docker-compose up -d`
-6. read the rest of the article to learn about renewing TLS certs
+### Make read 
+**To Be Added Later** see original documentation at the top.
 
