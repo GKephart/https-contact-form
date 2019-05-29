@@ -38,7 +38,7 @@ certonly --webroot \
 * `-d dont-blindly-copy-past.face-palm` 
 	* specifies the domain/domains to verify for the ssl certificate 
 4. If the command from step 3 is successful run `sudo rm -rf /docker-volumes/pwp`
-5. run the same command from step 3 but this time without the staging flag and add an email for reminders on when to reissue the certificate 
+5. run the same command from step 3 but this time without the staging flag and make sure add an email for reminders on when to reissue the certificate 
 ```
 sudo docker container run -it --rm \
 -v /docker-volumes/pwp/etc/letsencrypt:/etc/letsencrypt \
@@ -67,11 +67,11 @@ certonly --webroot \
 ### Configuring Containers to Use HTTPS
 * add `/starter-code/production.conf` to your projects `/production.conf`  
 	* make sure to replace every instance of `dont-blindly-copy-past.face-palm` with your actual url
-	* add `/starter-code/production-doceker-compose.yml` to your project's `/docker-compose.yml` \
-		* make sure to replace every instance of `dont-blindly-copy-past.face-palm` with your actual url
+* add `/starter-code/production-doceker-compose.yml` to your project's `/docker-compose.yml` \
+	* make sure to replace every instance of `dont-blindly-copy-past.face-palm` with your actual url
 3. run `mkdir dh-param` in your project on the host machine.
 4. run `sudo openssl dhparam -out dh-param/dhparam-2048.pem 2048` in your project on the host machine. 
 5. run `docker-compose up -d`
-### Make read 
+### Configuring cron for automated reissuing of SSL certs. 
 **To Be Added Later** see original documentation at the top.
 
