@@ -1,7 +1,5 @@
 # ISSUING  SSL CERTS WITH DOCKER CERTBOT	
-
-
-[original documentation](https://www.humankode.com/ssl/how-to-set-up-free-ssl-certificates-from-lets-encrypt-using-docker-and-nginx)
+## [original documentation](https://www.humankode.com/ssl/how-to-set-up-free-ssl-certificates-from-lets-encrypt-using-docker-and-nginx)
 ### Issuing the initial cert
 1. add `/starter-code/starter-docker-compose.yml` to `/docker-compose.yml`
 2. add `/starter-code/nginx.conf` to `/nginx.conf`
@@ -31,20 +29,30 @@ certonly --webroot \
 * `certbot/certbot` is the container that is going to be used.
 * `certonly --webroot \` sets the webroot to `/`
 * `--register-unsafely-without-email --agree-tos \` register unsafely for staging purposes and agree to the terms of service  
-* `--webroot-path=/data/letsencrypt \` sets the webroot-path to `/data/letsencrypt` inside of the certbot container 
-* `--staging \` issues the ssl certificate for staging purposes
-* `-d dont-blindly-copy-past.face-palm`  specifies the domain/domains to verify for the ssl certificate 
+* `--webroot-path=/data/letsencrypt \` 
+	* sets the webroot-path to `/data/letsencrypt` inside of the certbot container 
+* `--staging \` 
+	* issues the ssl certificate for staging purposes
+* `-d dont-blindly-copy-past.face-palm` 
+	*specifies the domain/domains to verify for the ssl certificate 
 
 
-
-
-
-
-
-4. If the command from step 3 is successful run these commands
-	* `sudo rm -rf /docker-volumes/pwp`
-	
-
+4. If the command from step 3 is successful run `sudo rm -rf /docker-volumes/pwp`
+5. run the same command from step 3 but this time without the staging flag and add an email for reminders on when to reissue the certificate 
+```
+sudo docker container run -it --rm \
+-v /docker-volumes/pwp/etc/letsencrypt:/etc/letsencrypt \
+-v /docker-volumes/pwp/etc/lib/letsencrypt:/var/lib/letsencrypt \
+-v $(pwd)/public_html:/data/letsencrypt \
+-v "/docker-volumes/pwp/var/log/:/var/log/letsencrypt" \
+certbot/certbot \
+certonly --webroot \
+--webroot-path=/data/letsencrypt \
+--agree-tos  --no-eff-email \
+--email your@email.you 
+-d dont-blindly-copy-past.face-palm -d www.dont-blindly-copy-past.face-palm
+```
+### Setting Up Production Containers for PWP
 1. make necessary directory changes 
 * replace `*/public_html/php/mail-config.php` for `/php/mail-config.php` in the .gitignore file
 * make sure that the paths to the SSL-certs in production.conf are correct and that  `return 301 https://uss-hopper.site$request_uri;` points to _our_ site.

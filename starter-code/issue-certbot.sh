@@ -5,7 +5,7 @@ sudo docker container run -it --rm \
 -v "/docker-volumes/pwp/var/log/:/var/log/letsencrypt" \
 certbot/certbot \
 certonly --webroot \
---register-unsafely-without-email --agree-tos \
 --webroot-path=/data/letsencrypt \
---staging \
+--agree-tos  --no-eff-email \
+--email your@email.you
 -d dont-blindly-copy-past.face-palm -d www.dont-blindly-copy-past.face-palm

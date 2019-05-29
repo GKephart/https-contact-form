@@ -1,6 +1,6 @@
 version: "3.1"
 services:
-  wtf:
+  frontend:
     image: nginx:latest
     ports:
       - "80:80"
