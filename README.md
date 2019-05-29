@@ -35,8 +35,6 @@ certonly --webroot \
 	* issues the ssl certificate for staging purposes
 * `-d dont-blindly-copy-past.face-palm` 
 	*specifies the domain/domains to verify for the ssl certificate 
-
-
 4. If the command from step 3 is successful run `sudo rm -rf /docker-volumes/pwp`
 5. run the same command from step 3 but this time without the staging flag and add an email for reminders on when to reissue the certificate 
 ```
@@ -53,13 +51,20 @@ certonly --webroot \
 -d dont-blindly-copy-past.face-palm -d www.dont-blindly-copy-past.face-palm
 ```
 ### Setting Up Production Containers for PWP
-1. make necessary directory changes 
-* replace `*/public_html/php/mail-config.php` for `/php/mail-config.php` in the .gitignore file
+1. add `/starter-code/frontend.Dockerfile` to your project's `/public_html/Dockerfile`
+2. add `/starter-code/php.Dockerfile` to your project's `/php/Dockerfile`
+3. add `/starter-code/production-docker-compose.yml` to your project's `/docker-compose.yml` \
+__optional__: If you are not using SSL 
+* add `/starter-code/default.conf` to `/production.conf` 
+* add `/starter-code/default-doceker-compose` to your projects
+`/docker-compose.yml`
+* run `docker-compose up -d` 
+### Configuring Containers to Use HTTPS
+
 * make sure that the paths to the SSL-certs in production.conf are correct and that  `return 301 https://uss-hopper.site$request_uri;` points to _our_ site.
 * change the action attribute in the contact form to `php/index.php`
 * make sure your index.html is an html file
-
-2. cd into the the project on digital ocean
+2 cd into the the project on digital ocean
 3. run `mkdir dh-param`
 4. run `sudo openssl dhparam -out dh-param/dhparam-2048.pem 2048` 
 5. run `docker-compose up -d`
