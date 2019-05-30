@@ -3,8 +3,7 @@ version: "3"
 services:
   backend:
     build: ./php
-  production-nginx-container:
-    container_name: 'production-nginx-container'
+  frontend:
     image: nginx:latest
     ports:
       - "80:80"
